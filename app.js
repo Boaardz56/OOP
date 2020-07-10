@@ -144,7 +144,7 @@ function addHTML(member) {
         if (role === "Engineer") {
             const github = member.getGithub();
             data = `<div class="card employee-card" style="" >
-            <div class="card-header" style="background-color:pink">
+            <div class="card-header" style="background-color:peachpuff">
                 <h2 class="card-title" >${name}</h2>
                 <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${role}</h3>
             </div>
@@ -159,7 +159,7 @@ function addHTML(member) {
         } else if (role === "Intern") {
             const school = member.getSchool();
             data = `<div class="card employee-card">
-            <div class="card-header">
+            <div class="card-header" style="background-color:peachpuff">
                 <h2 class="card-title">${name}</h2>
                 <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>${role}</h3>
             </div>
@@ -174,7 +174,7 @@ function addHTML(member) {
         } else {
             const officePhone = member.getOfficeNumber();
             data = `<div class="card employee-card">
-            <div class="card-header">
+            <div class="card-header" style="background-color:peachpuff">
                 <h2 class="card-title">${name}</h2>
                 <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${role}</h3>
             </div>
