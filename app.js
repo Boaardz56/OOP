@@ -91,9 +91,10 @@ function addTeamMember() {
             addHTML(newMember)
             .then(function() {
                 if (addingMembers === "Yes") {
-                    addTeamMember();
+                    finalHTML();
+                    return addTeamMember();
                 } else {
-                    finishHTML();
+                    finalHTML();
                 }
             });
         });
@@ -133,16 +134,16 @@ function startHTML() {
     });
 }
 
-function addToHtml(member) {
-    return new TeamMember(function(res, req) {
+function addHTML(member) {
+    return new Promise(function(res, req) {
         const name = member.getName();
         const id = member.getId();
         const email = member.getEmail();
         const role = member.getRole();
-        let total = "";
+        let data = "";
         if (role === "Engineer") {
-            const gitHub = member.getGithub();
-            data = `<div class="card employee-card" style="border-style:dotted" >
+            const github = member.getGithub();
+            data = `<div class="card employee-card" style="" >
             <div class="card-header" style="background-color:pink">
                 <h2 class="card-title" >${name}</h2>
                 <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${role}</h3>
