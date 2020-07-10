@@ -41,10 +41,51 @@ function addTeamMember() {
     }
     ])
     //add a promise
-    .then(function({roleInfo, addingMembers}) {
-        let newMember;
-        if (role === "")
-    }
+    .then(function({name, role, id, email}) {
+        let roleInfo = "";
+        if (role === "Engineer") {
+            roleInfo = "GitHub username";
+        }else if (role === "Intern") {
+            roleInfo = "School Name";
+        }else (role === "Manager") {
+            roleInfo = "Office Phone Number";
+        }
+        inquirer.prompt([{
+            //must add in jquery call to roleInfo
+            message: `Enter team member's ${roleInfo}`,
+            name: "roleInfo"
+        },
+        {
+            type: "list",
+            message: "Would you like to add more team members?",
+            choices: [
+                "Yes",
+                "No"
+            ],
+            name: "addingMembers"
+        }])
+        //promise to add more team members
+        .then(function({roleInfo, addingMembers}) {
+            var newMember;
+            if (role === "Engineer") {
+                newMember = added Engineer(name, id, email, roleInfo);
+            } else if (role === "Intern") {
+                newMember = added Intern(name, id, email, roleInfo);
+            } else {
+                newMember = added Manager(name, id, email, roleInfo);
+            }
+            //push answers into empty employees array
+            employees.push(newMember);
+            addHTML(newMember)
+            .then(function() {
+                if (addingMembers === "Yes") {
+                    addTeamMember();
+                } else {
+                    finishHTML();
+                }
+            });
+        });
+    });
 }
 
 
