@@ -6,6 +6,8 @@ const path = require("path");
 const fs = require("fs");
 
 const render = require("./lib/htmlRenderer");
+const { rejects } = require("assert");
+const { resolve } = require("path");
 
 const OUTPUT_DIR = path.resolve(__dirname, "output");
 //targeting the new team.html path
@@ -132,12 +134,81 @@ function startHTML() {
 }
 
 function addToHtml(member) {
-    return new TeamMember(function(rep, req) {
+    return new TeamMember(function(res, req) {
         const name = member.getName();
         const id = member.getId();
         const email = member.getEmail();
         const role = member.getRole();
         let total = "";
-        
-    }
-})
+        if (role === "Engineer") {
+            const gitHub = member.getGithub();
+            data = `<div class="card employee-card" style="border-style:dotted" >
+            <div class="card-header" style="background-color:pink">
+                <h2 class="card-title" >${name}</h2>
+                <h3 class="card-title"><i class="fas fa-glasses mr-2"></i>${role}</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">Email: ${email}</li>
+                    <li class="list-group-item">GitHub:${github}</li>
+                </ul>
+            </div>
+        </div>`;
+        } else if (role === "Intern") {
+            const school = member.getSchool();
+            data = `<div class="card employee-card">
+            <div class="card-header">
+                <h2 class="card-title">${name}</h2>
+                <h3 class="card-title"><i class="fas fa-user-graduate mr-2"></i>${role}</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">Email: ${email}</li>
+                    <li class="list-group-item">School: ${school}</li>
+                </ul>
+            </div>
+        </div>`
+        } else {
+            const officePhone = member.getOfficeNumber();
+            data = `<div class="card employee-card">
+            <div class="card-header">
+                <h2 class="card-title">${name}</h2>
+                <h3 class="card-title"><i class="fas fa-mug-hot mr-2"></i>${role}</h3>
+            </div>
+            <div class="card-body">
+                <ul class="list-group">
+                    <li class="list-group-item">ID: ${id}</li>
+                    <li class="list-group-item">Email: ${email}</li>
+                    <li class="list-group-item">Office number: ${officePhone} </li>
+                </ul>
+            </div>
+        </div`
+        }
+        fs.appendFile("./output/team.html", data, function (err) {
+            if (err) {
+                return req(err);
+            };
+            return res;
+         });
+    });
+}
+
+//put together final html
+function finalHTML() {
+    const html = `</div>
+    </div>
+</body>
+
+</html>`;
+
+    fs.appendFile("./output/team.html", html, function (err) {
+        if (err) {
+            console.log(err);
+        };
+    });
+}
+
+//call starting function
+startApp();
