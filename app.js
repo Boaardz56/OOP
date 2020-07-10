@@ -28,7 +28,7 @@ function addTeamMember() {
             "Engineer",
             "Intern",
             "Manager"
-        ]
+        ],
         name: "role"
     },
     {
@@ -45,9 +45,9 @@ function addTeamMember() {
         let roleInfo = "";
         if (role === "Engineer") {
             roleInfo = "GitHub username";
-        }else if (role === "Intern") {
+        } else if (role === "Intern") {
             roleInfo = "School Name";
-        }else (role === "Manager") {
+        } else  {
             roleInfo = "Office Phone Number";
         }
         inquirer.prompt([{
@@ -68,11 +68,11 @@ function addTeamMember() {
         .then(function({roleInfo, addingMembers}) {
             var newMember;
             if (role === "Engineer") {
-                newMember = added Engineer(name, id, email, roleInfo);
+                newMember = new Engineer(name, id, email, roleInfo);
             } else if (role === "Intern") {
-                newMember = added Intern(name, id, email, roleInfo);
+                newMember = new Intern(name, id, email, roleInfo);
             } else {
-                newMember = added Manager(name, id, email, roleInfo);
+                newMember = new Manager(name, id, email, roleInfo);
             }
             //push answers into empty employees array
             employees.push(newMember);
