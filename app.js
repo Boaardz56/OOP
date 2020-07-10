@@ -5,19 +5,25 @@ const inquirer = require("inquirer");
 const path = require("path");
 const fs = require("fs");
 
+const render = require("./lib/htmlRenderer");
+
+const OUTPUT_DIR = path.resolve(__dirname, "output");
+//targeting the new team.html path
+const outputPath = path.join(OUTPUT_DIR, "team.html");
+
 //setting array for variable
 const employees = [];
 
-//fxn to start the application and add members
+//starting application
 function startApp() {
     startHTML();
     addTeamMember();
 }
-
 // Write code to use inquirer to gather information about the development team members,
 // and to create objects for each team member (using the correct classes as blueprints!)
 function addTeamMember() {
     inquirer.prompt([{
+        type: "input",
         message: "Please enter team member's name.",
         name: "name"
     },
@@ -32,14 +38,18 @@ function addTeamMember() {
         name: "role"
     },
     {
+        type: "input",
         message: "Please enter team member's id.",
         name: "id"
     },
     {
+        type: "input",
         message: "Please enter team member's email address.",
         name: "email"
-    }
-    ])
+    }])
+
+
+
     //add a promise
     .then(function({name, role, id, email}) {
         let roleInfo = "";
@@ -88,26 +98,46 @@ function addTeamMember() {
     });
 }
 
+//build html
+function startHTML() {
+ const html = `<!DOCTYPE html>
+<html lang="en">
 
-const OUTPUT_DIR = path.resolve(__dirname, "output");
-//targeting the new team.html path
-const outputPath = path.join(OUTPUT_DIR, "team.html");
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>My Team</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://kit.fontawesome.com/c502137733.js"></script>
+</head>
 
-const render = require("./lib/htmlRenderer");
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 jumbotron mb-3 team-heading" style="background-color:thistle";>
+                <h1 class="text-center" style="color:white";>My Team</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">`;
+    fs.writeFile('./output/team.html', html, function(err) {
+        if (err) {
+            console.log(err);
+        }
+    });
+}
 
-
-
-
-// After the user has input all employees desired, call the `render` function (required
-// above) and pass in an array containing all employee objects; the `render` function will
-// generate and return a block of HTML including templated divs for each employee!
-
-
-
-
-
-// HINT: make sure to build out your classes first! Remember that your Manager, Engineer,
-// and Intern classes should all extend from a class named Employee; see the directions
-// for further information. Be sure to test out each class and verify it generates an
-// object with the correct structure and methods. This structure will be crucial in order
-// for the provided `render` function to work! ```
+function addToHtml(member) {
+    return new TeamMember(function(rep, req) {
+        const name = member.getName();
+        const id = member.getId();
+        const email = member.getEmail();
+        const role = member.getRole();
+        let total = "";
+        
+    }
+})
